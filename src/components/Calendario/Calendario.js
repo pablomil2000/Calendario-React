@@ -22,6 +22,13 @@ const Day = styled.td`
 	}
 `;
 
+const CalendarMenu = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+`;
+
 const Button = styled.button`
 	background-color: #4caf50;
 	border: none;
@@ -175,13 +182,13 @@ const Calendar = () => {
 
 	return (
 		<div>
-			<div>
+			<CalendarMenu>
 				<Button onClick={ prevMonth }>Mes Anterior</Button>
 				<span>
 					{ monthName } { year }
 				</span>
 				<Button onClick={ nextMonth }>Mes Siguiente</Button>
-			</div>
+			</CalendarMenu>
 			<CalendarTable>
 				<CalendarHeader monthName={ monthName } year={ year } />
 				<tbody>{ renderCalendar() }</tbody>
