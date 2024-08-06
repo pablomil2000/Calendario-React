@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import CalendarHeader from "../CalendarHeader/CalendarHeader";
+
 // Define the styled-components
 const CalendarTable = styled.table`
     border-collapse: collapse;
@@ -8,10 +10,6 @@ const CalendarTable = styled.table`
     margin-top: 20px;
 `;
 
-const CalendarHeader = styled.thead`
-	color: #333;
-	background-color: #f2f2f2;
-`;
 
 const Day = styled.td`
 	border: 1px solid #ddd;
@@ -106,6 +104,7 @@ const Calendar = () => {
 			}
 			cells.push(
 				<Day
+					onClick={ () => console.log("Click") }
 					key={ i }
 					className={
 						calendar[i] === currentDate.dia &&
@@ -174,7 +173,6 @@ const Calendar = () => {
 		"Diciembre",
 	][month];
 
-	const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 	return (
 		<div>
 			<div>
@@ -185,18 +183,7 @@ const Calendar = () => {
 				<Button onClick={ nextMonth }>Mes Siguiente</Button>
 			</div>
 			<CalendarTable>
-				<CalendarHeader>
-					<tr>
-						<td colSpan="7">
-							{ monthName } { year }
-						</td>
-					</tr>
-					<tr>
-						{ weekDays.map((day) => (
-							<td key={ day }>{ day }</td>
-						)) }
-					</tr>
-				</CalendarHeader>
+				<CalendarHeader monthName={ monthName } year={ year } />
 				<tbody>{ renderCalendar() }</tbody>
 			</CalendarTable>
 		</div>
