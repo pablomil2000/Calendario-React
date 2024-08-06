@@ -60,21 +60,6 @@ const Calendar = () => {
 		let semana = fecha2.getDay();
 		let semana2 = semana === 0 ? 6 : semana - 1;
 
-		const meses = [
-			"Enero",
-			"Febrero",
-			"Marzo",
-			"Abril",
-			"Mayo",
-			"Junio",
-			"Julio",
-			"Agosto",
-			"Septiembre",
-			"Octubre",
-			"Noviembre",
-			"Diciembre",
-		];
-
 		let maxdia;
 		if (month !== 1) {
 			if (month === 3 || month === 5 || month === 8 || month === 10) {
@@ -189,6 +174,7 @@ const Calendar = () => {
 		"Diciembre",
 	][month];
 
+	const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 	return (
 		<div>
 			<div>
@@ -206,13 +192,9 @@ const Calendar = () => {
 						</td>
 					</tr>
 					<tr>
-						<td>Lunes</td>
-						<td>Martes</td>
-						<td>Miércoles</td>
-						<td>Jueves</td>
-						<td>Viernes</td>
-						<td>Sábado</td>
-						<td>Domingo</td>
+						{ weekDays.map((day) => (
+							<td key={ day }>{ day }</td>
+						)) }
 					</tr>
 				</CalendarHeader>
 				<tbody>{ renderCalendar() }</tbody>
