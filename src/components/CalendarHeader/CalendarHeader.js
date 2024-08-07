@@ -1,19 +1,21 @@
+import styled from "styled-components";
 export default function CalendarHeader (props) {
 	const { monthName, year } = props;
 
 	const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
+	const Column = styled.td`
+		text-align: center;
+		padding: 0.5em;
+		margin: 20;
+	`;
+
 	return (
 		<>
 			<thead>
 				<tr>
-					<td colSpan="7">
-						{ monthName } { year }
-					</td>
-				</tr>
-				<tr>
 					{ weekDays.map((day) => (
-						<td key={ day }>{ day }</td>
+						<Column key={ day }>{ day }</Column>
 					)) }
 				</tr>
 			</thead>

@@ -43,7 +43,7 @@ const Button = styled.button`
 	&:hover {
 		background-color: #45a049;
 	}
-`;
+	`;
 
 const Calendar = () => {
 	const [calendar, setCalendar] = useState([]);
@@ -53,7 +53,7 @@ const Calendar = () => {
 
 	useEffect(() => {
 		generateCalendar();
-	}, [month, year]);
+	});
 
 	const generateCalendar = () => {
 		const fecha = new Date();
