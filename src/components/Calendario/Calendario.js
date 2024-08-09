@@ -1,199 +1,98 @@
 import React, { useState, useEffect } from "react";
+
+import Month from "../Month";
 import styled from "styled-components";
 
-import CalendarHeader from "../CalendarHeader/CalendarHeader";
+const Calendar = () => {
 
-// Define the styled-components
-const CalendarTable = styled.table`
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 20px;
-`;
-
-
-const Day = styled.td`
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: center;
-
-	&.active {
-		background-color: #4caf50;
-		color: #333;
-	}
-`;
-
-const CalendarMenu = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 20px;
-`;
-
-const Button = styled.button`
-	background-color: #4caf50;
-	border: none;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	cursor: pointer;
-
-	&:hover {
-		background-color: #45a049;
-	}
+	// Styles
+	const Grid = styled.div`
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-gap: 10px;
 	`;
 
-const Calendar = () => {
-	const [calendar, setCalendar] = useState([]);
-	const [currentDate, setCurrentDate] = useState({});
-	const [month, setMonth] = useState(new Date().getMonth());
+	// variables
 	const [year, setYear] = useState(new Date().getFullYear());
 
+	// json meses
+	const meses = [
+		{
+			"id": 0,
+			"mes": "Enero",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}, {
+			"id": 1,
+			"mes": "Febrero",
+			"maxDays": 28,
+			"maxDaysBisiesto": 29
+		}, {
+			"id": 2,
+			"mes": "Marzo",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}, {
+			"id": 3,
+			"mes": "Abril",
+			"maxDays": 30,
+			"maxDaysBisiesto": 30
+		}, {
+			"id": 4,
+			"mes": "Mayo",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}, {
+			"id": 5,
+			"mes": "Junio",
+			"maxDays": 30,
+			"maxDaysBisiesto": 30
+		}, {
+			"id": 6,
+			"mes": "Julio",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}, {
+			"id": 7,
+			"mes": "Agosto",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}, {
+			"id": 8,
+			"mes": "Septiembre",
+			"maxDays": 30,
+			"maxDaysBisiesto": 30
+		}, {
+			"id": 9,
+			"mes": "Octubre",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+
+		}, {
+			"id": 10,
+			"mes": "Noviembre",
+			"maxDays": 30,
+			"maxDaysBisiesto": 30
+
+		}, {
+			"id": 11,
+			"mes": "Diciembre",
+			"maxDays": 31,
+			"maxDaysBisiesto": 31
+		}
+	];
+
+	// Funtions
 	useEffect(() => {
-		generateCalendar();
-	});
+	}, [year]);
 
-	const generateCalendar = () => {
-		const fecha = new Date();
-		const ahora = fecha.getDate();
-		let hora = fecha.getHours();
-		const min = fecha.getMinutes();
-
-		const fecha2 = new Date(year, month, 1);
-		let semana = fecha2.getDay();
-		let semana2 = semana === 0 ? 6 : semana - 1;
-
-		let maxdia;
-		if (month !== 1) {
-			if (month === 3 || month === 5 || month === 8 || month === 10) {
-				maxdia = 30;
-			} else {
-				maxdia = 31;
-			}
-		} else {
-			maxdia = 28;
-			if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-				maxdia = 29;
-			}
-		}
-
-		let calendario = [];
-		for (let i = 0; i < semana2; i++) {
-			calendario.push("");
-		}
-
-		for (let i = 1; i <= maxdia; i++) {
-			calendario.push(i);
-		}
-
-		let texto = "";
-		if (hora > 12) {
-			texto = "pm";
-			hora = hora - 12;
-		} else {
-			texto = "am";
-		}
-
-		setCalendar(calendario);
-		setCurrentDate({ dia: ahora, hora: hora, min: min, texto: texto });
-	};
-
-	const renderCalendar = () => {
-		let dia = 0;
-		const rows = [];
-		let cells = [];
-
-		for (let i = 0; i < calendar.length; i++) {
-			if (dia === 0) {
-				cells = [];
-			}
-			cells.push(
-				<Day
-					onClick={ () => console.log("Click") }
-					key={ i }
-					className={
-						calendar[i] === currentDate.dia &&
-							month === new Date().getMonth() &&
-							year === new Date().getFullYear()
-							? "active"
-							: ""
-					}
-				>
-					{ calendar[i] }
-					{ calendar[i] === currentDate.dia &&
-						month === new Date().getMonth() &&
-						year === new Date().getFullYear() && (
-							<>
-								<br />
-								{ currentDate.hora }:{ currentDate.min } { currentDate.texto }
-							</>
-						) }
-				</Day>
-			);
-			dia++;
-
-			if (dia === 7) {
-				rows.push(<tr key={ i }>{ cells }</tr>);
-				dia = 0;
-			}
-		}
-
-		if (dia !== 0) {
-			rows.push(<tr key={ calendar.length }>{ cells }</tr>);
-		}
-
-		return rows;
-	};
-
-	const prevMonth = () => {
-		if (month === 0) {
-			setMonth(11);
-			setYear(year - 1);
-		} else {
-			setMonth(month - 1);
-		}
-	};
-
-	const nextMonth = () => {
-		if (month === 11) {
-			setMonth(0);
-			setYear(year + 1);
-		} else {
-			setMonth(month + 1);
-		}
-	};
-
-	const monthName = [
-		"Enero",
-		"Febrero",
-		"Marzo",
-		"Abril",
-		"Mayo",
-		"Junio",
-		"Julio",
-		"Agosto",
-		"Septiembre",
-		"Octubre",
-		"Noviembre",
-		"Diciembre",
-	][month];
 
 	return (
-		<div>
-			<CalendarMenu>
-				<Button onClick={ prevMonth }>Mes Anterior</Button>
-				<span>
-					{ monthName } { year }
-				</span>
-				<Button onClick={ nextMonth }>Mes Siguiente</Button>
-			</CalendarMenu>
-			<CalendarTable>
-				<CalendarHeader monthName={ monthName } year={ year } />
-				<tbody>{ renderCalendar() }</tbody>
-			</CalendarTable>
-		</div>
+		<Grid>
+			{ meses.map((mes) => (
+				<Month key={ mes.id } year={ year } month={ mes } />
+			)) }
+		</Grid>
 	);
 };
 

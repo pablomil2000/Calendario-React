@@ -1,7 +1,5 @@
 import styled from "styled-components";
 export default function CalendarHeader (props) {
-	const { monthName, year } = props;
-
 	const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
 	const Column = styled.td`
